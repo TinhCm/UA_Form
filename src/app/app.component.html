@@ -1,15 +1,14 @@
-<router-outlet></router-outlet>
 <h1 class="title">BIÊN BẢN ĐÁNH GIÁ CÔNG VIỆC CỦA KỸ THUẬT XƯỞNG</h1>
 <div class="card">
-  <p-treeTable
-    [value]="sales"
-    [scrollable]="true"
+  <p-table
+    [value]="products"
+    dataKey="id"
     [tableStyle]="{ 'min-width': '50rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
         <th rowspan="3">STT</th>
-        <th colspan="4">THÔNG TIN CHUNG (Kỹ thuật xưởng ghi nhận)</th>
+        <th colspan="5">THÔNG TIN CHUNG (Kỹ thuật xưởng ghi nhận)</th>
         <th colspan="6">
           THỜI GIAN & TIÊU CHÍ ĐÁNH GIÁ (Chuyền trưởng ghi nhận)
         </th>
@@ -17,9 +16,9 @@
       <tr>
         <th rowspan="3">NGÀY</th>
         <th rowspan="3">CHUYỀN</th>
+        <th rowspan="3">MÃ HÀNG</th>
         <th rowspan="3">MÀU</th>
         <th rowspan="3">LOẠI CHUYỂN ĐỔI (1-chuyển đổi màu 2-khác)</th>
-
         <th rowspan="3">Start time (<i>Thời gian bắt đầu triển khai</i>)</th>
 
         <th colspan="1">1</th>
@@ -43,12 +42,8 @@
         <th colspan="1">Rập cứng đã triển khai đúng và đầy đủ</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+    <!-- <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
       <tr>
-        <!-- <td>
-          <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-          {{ rowData.brand }}
-        </td> -->
         <td>{{ rowData.id }}</td>
         <td>{{ rowData.date }}</td>
         <td>{{ rowData.chuyen }}</td>
@@ -61,13 +56,145 @@
         <td>{{ rowData.four }}</td>
         <td>{{ rowData.fire }}</td>
       </tr>
-    </ng-template>
-    <!-- <ng-template pTemplate="footer">
-      <tr>
-        <td colspan="3">Totals</td>
-        <td>$3,283,772</td>
-        <td>$2,126,925</td>
-      </tr>
     </ng-template> -->
-  </p-treeTable>
+    <ng-template pTemplate="body" let-product let-editing="editing">
+      <tr>
+        <td [pEditableColumn]="product.id">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.id" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.id }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.date" pEditableColumnField="date">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="date"
+                [(ngModel)]="product.date"
+                required
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.date }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.chuyen" pEditableColumnField="chuyen">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText [(ngModel)]="product.chuyen" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.chuyen }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.maHang" pEditableColumnField="maHang">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.maHang" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.maHang }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.mau" pEditableColumnField="mau">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.mau" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.mau }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td
+          [pEditableColumn]="product.loaiChuyenDoi"
+          pEditableColumnField="loaiChuyenDoi"
+        >
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input
+                pInputText
+                type="text"
+                [(ngModel)]="product.loaiChuyenDoi"
+              />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.loaiChuyenDoi }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td
+          [pEditableColumn]="product.startTime"
+          pEditableColumnField="startTime"
+        >
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.startTime" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.startTime }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.one" pEditableColumnField="one">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.one" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.one }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.two" pEditableColumnField="two">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.two" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.two }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.three" pEditableColumnField="thr">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.three" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.three }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.four" pEditableColumnField="four">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.four" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.four }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td [pEditableColumn]="product.fire" pEditableColumnField="fire">
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <input pInputText type="text" [(ngModel)]="product.fire" />
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ product.fire }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
